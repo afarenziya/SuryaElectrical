@@ -32,6 +32,11 @@ export default function Header() {
             href="/" 
             className="flex items-center space-x-3" 
             data-testid="link-home"
+            onClick={() => {
+              if (location === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
           >
             <div className="bg-primary text-primary-foreground rounded-lg p-2">
               <Zap className="h-5 w-5" />
@@ -48,6 +53,11 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
+                onClick={() => {
+                  if (isActive(item.href)) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
                 className={`font-medium transition-colors ${
                   isActive(item.href)
                     ? "text-primary"
@@ -86,7 +96,12 @@ export default function Header() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        setIsOpen(false);
+                        if (isActive(item.href)) {
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                      }}
                       className={`text-lg font-medium transition-colors ${
                         isActive(item.href)
                           ? "text-primary"
