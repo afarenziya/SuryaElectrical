@@ -28,7 +28,17 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Business Name */}
-          <Link href="/" className="flex items-center space-x-3" data-testid="link-home">
+          <a 
+            href={location === "/" ? "#hero" : "/#hero"} 
+            className="flex items-center space-x-3" 
+            data-testid="link-home"
+            onClick={(e) => {
+              if (location === "/") {
+                e.preventDefault();
+                document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
             <div className="bg-primary text-primary-foreground rounded-lg p-2">
               <Zap className="h-5 w-5" />
             </div>
@@ -36,14 +46,20 @@ export default function Header() {
               <h1 className="text-xl font-bold text-foreground">Surya Electrical</h1>
               <p className="text-xs text-muted-foreground">& Hardware</p>
             </div>
-          </Link>
+          </a>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navigation.map((item) => (
-              <Link
+              <a
                 key={item.name}
-                href={item.href}
+                href={location === item.href ? "#top" : item.href}
+                onClick={(e) => {
+                  if (location === item.href) {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                }}
                 className={`font-medium transition-colors ${
                   isActive(item.href)
                     ? "text-primary"
@@ -52,7 +68,7 @@ export default function Header() {
                 data-testid={`nav-${item.name.toLowerCase()}`}
               >
                 {item.name}
-              </Link>
+              </a>
             ))}
           </nav>
           
@@ -79,10 +95,58 @@ export default function Header() {
               <SheetContent side="right" className="w-80">
                 <div className="flex flex-col space-y-4 mt-8">
                   {navigation.map((item) => (
-                    <Link
+                    <a
                       key={item.name}
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
+                      href={location === item.href ? "#top" : item.href}
+                      onClick={(e) => {
+                        if (location === item.href) {
+                          e.preventDefault();
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }
+                        setIsOpen(false);
+                      }}
+                      className={`text-lg font-medium transition-colors ${
+                        isActive(item.href)
+                          ? "text-primary"
+                          : "text-muted-foreground hover:text-primary"
+                      }`}
+                      data-testid={`nav-mobile-${item.name.toLowerCase()}`}
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+                      onClick={(e) => {
+                        if (location === item.href) {
+                          e.preventDefault();
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }
+                        setIsOpen(false);
+                      }}
+                      className={`text-lg font-medium transition-colors ${
+                        isActive(item.href)
+                          ? "text-primary"
+                          : "text-muted-foreground hover:text-primary"
+                      }`}
+                      data-testid={`nav-mobile-${item.name.toLowerCase()}`}
+                    >
+                      {item.name}
+                    </a>
+                      onClick={(e) => {
+                        if (location === item.href) {
+                          e.preventDefault();
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }
+                        setIsOpen(false);
+                      }}
                       className={`text-lg font-medium transition-colors ${
                         isActive(item.href)
                           ? "text-primary"
@@ -91,7 +155,7 @@ export default function Header() {
                       data-testid={`mobile-nav-${item.name.toLowerCase()}`}
                     >
                       {item.name}
-                    </Link>
+                    </a>
                   ))}
                   <div className="pt-4 border-t border-border">
                     <a href="tel:9999318867" className="block w-full" data-testid="button-call-mobile">

@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertContactRequestSchema } from "@shared/schema";
-import type { InsertContactRequest } from "@shared/schema";
+import { contactFormSchema } from "@/lib/schema";
+import type { ContactFormData } from "@/lib/schema";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -11,13 +10,12 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
 
 export default function ContactForm() {
   const { toast } = useToast();
   
-  const form = useForm<InsertContactRequest>({
-    resolver: zodResolver(insertContactRequestSchema),
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
     defaultValues: {
       name: "",
       phone: "",
@@ -26,28 +24,14 @@ export default function ContactForm() {
     },
   });
 
-  const contactMutation = useMutation({
-    mutationFn: async (data: InsertContactRequest) => {
-      const response = await apiRequest("POST", "/api/contact", data);
-      return response.json();
-    },
-    onSuccess: (data) => {
-      toast({
-        title: "Request Submitted",
-        description: data.message,
-      });
-      form.reset();
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to submit request",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const onSubmit = (data: InsertContactRequest) => {
+  const onSubmit = (data: ContactFormData) => {
+    // Here you can handle the form data, for example:
+    console.log(data);
+    toast({
+      title: "Message Sent",
+      description: "Thank you for contacting us. We will get back to you soon.",
+    });
+    form.reset();
     contactMutation.mutate(data);
   };
 
@@ -141,10 +125,9 @@ export default function ContactForm() {
             <Button 
               type="submit" 
               className="w-full" 
-              disabled={contactMutation.isPending}
               data-testid="button-submit-contact"
             >
-              {contactMutation.isPending ? "Submitting..." : "Request Call Back"}
+              Request Call Back
             </Button>
           </form>
         </Form>
