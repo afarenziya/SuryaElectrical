@@ -13,6 +13,8 @@ import Contact from "@/pages/contact";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import WhatsAppFloat from "@/components/layout/whatsapp-float";
+import ScrollToTop from "@/components/layout/scroll-to-top";
+import ScrollToTopButton from "@/components/layout/scroll-to-top-button";
 
 function Router() {
   return (
@@ -33,12 +35,14 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <div className="min-h-screen flex flex-col">
+          <ScrollToTop />
           <Header />
           <main className="flex-1">
             <Router />
           </main>
           <Footer />
           <WhatsAppFloat />
+          <ScrollToTopButton />
         </div>
         <Toaster />
       </TooltipProvider>

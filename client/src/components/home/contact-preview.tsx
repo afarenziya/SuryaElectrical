@@ -139,7 +139,7 @@ export default function ContactPreview() {
                 </div>
                 <div className="text-center">
                   <a 
-                    href="https://maps.google.com/?q=32+K-1st+Gali+No+18+Mangal+Bazar+Auto+Stand+Ratiya+Marg+Sangam+Vihar+New+Delhi+110080" 
+                    href="https://share.google/2PldaNNFZInyW1uip" 
                     target="_blank" 
                     className="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm"
                     data-testid="link-google-maps-preview"
